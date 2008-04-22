@@ -16,3 +16,4 @@ Keywords: Newman's lemma, Tarski's fixpoint theorem, line formatting,
   binary-search paradigm, square root approximation, Calculus of
   Constructions, history of Coq
 Require:
+Category: Miscellaneous/Coq Use Examples
