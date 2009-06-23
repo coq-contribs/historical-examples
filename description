@@ -11,7 +11,6 @@ Description: This is a collection of historical examples developed in
   Format.v are from version 4.3. Their evolution to the Calculus of
   Inductive Constructions (up to Coq V6.3) are in MannaCIC.v and
   FormatCIC.v. (Collection by Hugo Herbelin.)
-URL:
 Keywords: Newman's lemma, Tarski's fixpoint theorem, line formatting,
   binary-search paradigm, square root approximation, 
   Calculus of Constructions, history of Coq
