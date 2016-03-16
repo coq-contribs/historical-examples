@@ -1,5 +1,6 @@
 -R . HistoricalExamples
--impredicative-set
+-arg -impredicative-set
+
 Base.v
 FormatCIC.v
 Format.v
