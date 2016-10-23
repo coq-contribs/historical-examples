@@ -164,7 +164,7 @@ Inductive val_or_no (l : l_ch) : Set :=
 (* To add a space to a valid list is easy *)
 
 Remark valbl : forall (b : bool) (l : l_ch), valide l -> valide (consbl b l).
-intros; apply (vapp nil (consbl b nil) l); auto with v62.
+intros; apply (vapp nil (consbl b nil) l); auto.
 apply wordnil.
 apply space_bl.
 Qed.
@@ -177,19 +177,19 @@ Remark valltr :
 intros; elim H; intros.
 elim (ax1 (S (lgth m))); intros.
 apply (inval (consltr i m)).
-apply vword; auto with v62.
-apply wordltr; auto with v62.
+apply vword; auto.
+apply wordltr; auto.
 apply (inNV (consltr i m)).
-apply NVword; auto with v62.
-apply wordltr; auto with v62.
+apply NVword; auto.
+apply wordltr; auto.
 elim (ax1 (S (lgth m1))); intros.
 apply (inval (consltr i (app m1 (app m2 p)))).
-apply (vapp (consltr i m1) m2 p); auto with v62.
-apply wordltr; auto with v62.
+apply (vapp (consltr i m1) m2 p); auto.
+apply wordltr; auto.
 apply (inNV (consltr i (app m1 (app m2 p)))).
 apply (NVapp1 (consltr i m1) (app m2 p)).
-apply NVword; auto with v62.
-apply wordltr; auto with v62.
+apply NVword; auto.
+apply wordltr; auto.
 Qed.
 
 (* The complete proof is by induction on the structure of the list *)
@@ -197,17 +197,17 @@ Qed.
 Lemma preproc : forall l : l_ch, val_or_no l.
 intro; elim l; intros.
 apply (inval nil).
-apply vword; auto with v62.
+apply vword; auto.
 apply wordnil.
 elim H; intros.
 apply (inval (consbl b l0)).
-apply valbl; auto with v62.
+apply valbl; auto.
 apply (inNV (consbl b l0)).
-apply (NVapp2 l0 (consbl b nil)); auto with v62.
+apply (NVapp2 l0 (consbl b nil)); auto.
 elim H; intros.
-apply valltr; auto with v62.
+apply valltr; auto.
 apply (inNV (consltr i l0)).
-apply (NVapp2 l0 (consltr i nil)); auto with v62.
+apply (NVapp2 l0 (consltr i nil)); auto.
 Qed.
 
 (* We define the relation "two lists are equivalent", the intended meaning *)
@@ -236,8 +236,8 @@ Inductive Eq : l_ch -> l_ch -> Prop :=
  Theorem Eq_re : forall l : l_ch, Equivalence.Eq l l.
  intro; elim l; intros.
  apply Eq_nil.
- apply Eq_co_bl; auto with v62.
- apply Eq_co_ltr; auto with v62.
+ apply Eq_co_bl; auto.
+ apply Eq_co_ltr; auto.
  Qed.
 
 (* Eq stability with respect to append *)
@@ -245,18 +245,18 @@ Inductive Eq : l_ch -> l_ch -> Prop :=
  Theorem Eq_app :
   forall l m n : l_ch,
   Equivalence.Eq m n -> Equivalence.Eq (app l m) (app l n).
- intros; elim l; intros; auto with v62.
- apply (Eq_co_bl b b (app l0 m) (app l0 n)); auto with v62.
- apply (Eq_co_ltr i (app l0 m) (app l0 n)); auto with v62.
+ intros; elim l; intros; auto.
+ apply (Eq_co_bl b b (app l0 m) (app l0 n)); auto.
+ apply (Eq_co_ltr i (app l0 m) (app l0 n)); auto.
  Qed.
 
 (* particular case n=nil, directly proved *)
 
  Theorem Eq_app_nil :
   forall l m : l_ch, Equivalence.Eq m nil -> Equivalence.Eq (app l m) l.
- intros; elim l; intros; auto with v62.
- apply (Eq_co_bl b b (app l0 m) l0); auto with v62.
- apply (Eq_co_ltr i (app l0 m) l0); auto with v62.
+ intros; elim l; intros; auto.
+ apply (Eq_co_bl b b (app l0 m) l0); auto.
+ apply (Eq_co_ltr i (app l0 m) l0); auto.
  Qed.
 
 (* Adding more than one separator does not change anything *)
@@ -266,16 +266,16 @@ Inductive Eq : l_ch -> l_ch -> Prop :=
   Equivalence.Eq m (consbl b n) -> Equivalence.Eq (app l m) (consbl b n).
  intros.
  elim H; intros.
- apply (Eq_bl_bl b b0 m n); auto with v62.
- apply (Eq_bl_bl b b0 (app l0 m) n); auto with v62.
+ apply (Eq_bl_bl b b0 m n); auto.
+ apply (Eq_bl_bl b b0 (app l0 m) n); auto.
  Qed.
 
 (* Adding separators at the beginning of the list is equivalent to nil *)
  Theorem Eq_space_nil :
   forall m : l_ch, space m -> Equivalence.Eq (app m nil) nil.
  intros; elim H; intros.
- apply (Eq_bl_nil b nil Eq_nil); auto with v62.
- apply (Eq_bl_nil b (app l nil) H1); auto with v62.
+ apply (Eq_bl_nil b nil Eq_nil); auto.
+ apply (Eq_bl_nil b (app l nil) H1); auto.
  Qed.
 
 (* Adding separators is equivalent to add a space *)
@@ -283,8 +283,8 @@ Inductive Eq : l_ch -> l_ch -> Prop :=
   forall l m n : l_ch,
   space l -> Equivalence.Eq m n -> Equivalence.Eq (app l m) (conssp n).
  intros; elim H; intros.
- apply (Eq_co_bl b true m n); auto with v62.
- apply (Eq_bl_bl true b (app l0 m) n); auto with v62.
+ apply (Eq_co_bl b true m n); auto.
+ apply (Eq_bl_bl true b (app l0 m) n); auto.
  Qed.
 
 End Equivalence.
@@ -324,16 +324,16 @@ Lemma Lem1 :
 intros.
 elim (ax1 (plus_l_ch m1 n)); intros.
 apply (ExFormat (app m1 p) (plus_l_ch m1 n) (appsp m1 m2)).
-apply (fwordinf n m1 b m2); auto with v62.
-apply (Eq_app m1 p (conssp m2)); auto with v62.
-apply (Eq_tran p (consbl b m2) (conssp m2)); auto with v62.
-apply (Eq_co_bl b true m2 m2); auto with v62.
+apply (fwordinf n m1 b m2); auto.
+apply (Eq_app m1 p (conssp m2)); auto.
+apply (Eq_tran p (consbl b m2) (conssp m2)); auto.
+apply (Eq_co_bl b true m2 m2); auto.
 apply Eq_re.
 apply (ExFormat (app m1 p) (lgth m1) (applf m1 m2)).
-apply (fwordsup n m1 b m2); auto with v62.
-apply (Eq_app m1 p (conslf m2)); auto with v62.
-apply (Eq_tran p (consbl b m2) (conslf m2)); auto with v62.
-apply (Eq_co_bl b false m2 m2); auto with v62.
+apply (fwordsup n m1 b m2); auto.
+apply (Eq_app m1 p (conslf m2)); auto.
+apply (Eq_tran p (consbl b m2) (conslf m2)); auto.
+apply (Eq_co_bl b false m2 m2); auto.
 apply Eq_re.
 Qed.
 
@@ -347,18 +347,18 @@ intros.
 elim p0; intros.
 red in |- *; intros.
 apply (ExFormat (app m1 (app m2 p)) (lgth m1) m1).
-apply (fword m1); auto with v62.
-apply (Eq_app_nil m1 (app m2 p)); auto with v62.
-apply (Eq_tran (app m2 p) (app m2 nil) nil); auto with v62.
-apply (Eq_app m2 p nil); auto with v62.
-apply (Eq_space_nil m2); auto with v62.
+apply (fword m1); auto.
+apply (Eq_app_nil m1 (app m2 p)); auto.
+apply (Eq_tran (app m2 p) (app m2 nil) nil); auto.
+apply (Eq_app m2 p nil); auto.
+apply (Eq_space_nil m2); auto.
 red in |- *; intros.
-apply (Lem1 b (app m2 p) m1 l n); auto with v62.
-apply (Eq_space_bl b m2 p l); auto with v62.
+apply (Lem1 b (app m2 p) m1 l n); auto.
+apply (Eq_space_bl b m2 p l); auto.
 red in |- *; intros.
-apply (Lem1 true (app m2 p) m1 (consltr i l) (S n)); auto with v62.
-apply (fsp n i l); auto with v62.
-apply (Eq_space m2 p (consltr i l)); auto with v62.
+apply (Lem1 true (app m2 p) m1 (consltr i l) (S n)); auto.
+apply (fsp n i l); auto.
+apply (Eq_space m2 p (consltr i l)); auto.
 Qed.
 
 (* Formatting of a valid list *)
@@ -367,18 +367,18 @@ Qed.
  intros.
  elim H; intros.
  apply (ExFormat m (lgth m) m).
- apply (fword m); auto with v62.
+ apply (fword m); auto.
  apply Eq_re.
  elim H0; intros.
- apply (Lem2 m1 m2 p w i s n m); auto with v62.
+ apply (Lem2 m1 m2 p w i s n m); auto.
  Qed.
 
 (* Formatting of a list : this function will detect if the list is not valid *)
 
  Theorem format_all : forall l : l_ch, SigFormat l + {NV l}.
  intro; elim (preproc l); intros.
- left; apply format; auto with v62.
- right; auto with v62.
+ left; apply format; auto.
+ right; auto.
  Qed.
 
 End Format.
