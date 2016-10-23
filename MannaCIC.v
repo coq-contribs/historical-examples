@@ -70,9 +70,9 @@ Qed.
 
 Theorem add_ass : forall u v w : nat, add (add u v) w = add u (add v w).
 intros.
-elim u; auto with v62.
+elim u; auto.
 intros; simpl in |- *.
-elim H; auto with v62.
+elim H; auto.
 Qed.
 
 (* Induction de contenu positif                        *)
@@ -83,7 +83,7 @@ Definition peano_set :
 (* Absurdity *)
 
  Theorem abs : forall A : Prop, False -> A.
- intros; elim H; auto with v62.
+ intros; elim H; auto.
  Qed.
 
 (* An axiomatized order relation on natural numbers *)
@@ -104,35 +104,35 @@ Definition peano_set :
  Lemma re_inf : forall n : nat, inf n n.
  intro; elim n.
  apply infOO.
- intros; apply inf_infS; auto with v62.
+ intros; apply inf_infS; auto.
  Qed.
       
  Lemma infO : forall n : nat, inf 0 n.
  intro; elim n.
  apply infOO.
- intros; apply (tran_inf 0 n0 (S n0)); auto with v62.
+ intros; apply (tran_inf 0 n0 (S n0)); auto.
  apply infS.
  Qed.
 
  Lemma infS_O : forall n : nat, inf (S n) 0 -> False.
  intro; elim n; intros.
- apply absO; auto with v62.
+ apply absO; auto.
  elim H.
- apply (tran_inf (S n0) (S (S n0)) 0); auto with v62.
+ apply (tran_inf (S n0) (S (S n0)) 0); auto.
  apply infS.
  Qed.
 
  Lemma infSn_n : forall n : nat, inf (S n) n -> False.
  intro; elim n; intros.
- apply absO; auto with v62.
+ apply absO; auto.
  elim H.
- apply infS_inf; auto with v62.
+ apply infS_inf; auto.
  Qed.
 
  Lemma inf_sup_abs : forall n m : nat, inf n m -> sup n m -> False.
  intros; apply (infSn_n n).
- apply (tran_inf (S n) (S m) n); auto with v62.
- apply inf_infS; auto with v62.
+ apply (tran_inf (S n) (S m) n); auto.
+ apply inf_infS; auto.
  Qed.
 
 (* A lemma : (sup n m)->(sup (twice n) (S m)) *)
@@ -140,7 +140,7 @@ Definition peano_set :
  Lemma inf_add : forall n m : nat, inf m (add n m).
  intros; elim n.
  apply re_inf.
- intros; apply (tran_inf m (add n0 m) (add (S n0) m)); auto with v62.
+ intros; apply (tran_inf m (add n0 m) (add (S n0) m)); auto.
  simpl in |- *; apply infS.
  Qed.
 
@@ -149,7 +149,7 @@ Definition peano_set :
  apply abs.
  apply (infS_O m H).
  apply (inf_infS (S m) (add n0 (S n0))).
- apply (tran_inf (S m) (S n0) (add n0 (S n0))); auto with v62.
+ apply (tran_inf (S m) (S n0) (add n0 (S n0))); auto.
  apply inf_add.
  Qed.
 
@@ -187,8 +187,8 @@ Variable n : nat.
 (* F is increasing is used this way *)
 
  Lemma infInf : forall u v : nat, inf u v -> Inf v -> Inf u.
- intros; apply (tran_inf (f u) (f v) n); auto with v62.
- apply Increas; auto with v62.
+ intros; apply (tran_inf (f u) (f v) n); auto.
+ apply Increas; auto.
  Qed.
 
 (* Setifications *)
@@ -202,8 +202,8 @@ Variable n : nat.
  Definition Lambo : Set := {m : nat | Sup m &  Small m}.
 
  Fact Lem1 : forall m : nat, Inf m -> Small (S m).
- red in |- *; intros; apply (infInf i m); auto with v62.
- apply infS_inf; auto with v62.
+ red in |- *; intros; apply (infInf i m); auto.
+ apply infS_inf; auto.
  Qed.
 
 (* Transformation of the specification *)
@@ -212,9 +212,9 @@ Variable n : nat.
  Lemma Reduct1 : Lambo1 -> Lambo.
  intro h; elim h.
  intro h1; elim h1; intros m f1 f2.
- red in |- *; exists (S m); auto with v62.
- apply Lem1; auto with v62.
- intro; red in |- *; exists 0; auto with v62.
+ red in |- *; exists (S m); auto.
+ apply Lem1; auto.
+ intro; red in |- *; exists 0; auto.
  exact SmallO.
  Qed.
 
@@ -243,13 +243,13 @@ Variable n : nat.
 
  Fact Lem2 : forall y1 y2 u v : nat, bd y1 u v -> inf v y2 -> bd y2 u v.
  intros; elim H; intros.
- red in |- *; auto with v62.
+ red in |- *; auto.
  Qed.
 
  Fact Lem3 : forall y u v w : nat, bd y u v -> bd y v w -> sup y w.
- intros; apply (tran_inf (S w) v y); auto with v62.
- elim H0; auto with v62.
- elim H; auto with v62.
+ intros; apply (tran_inf (S w) v y); auto.
+ elim H0; auto.
+ elim H; auto.
  Qed.
 
  Lemma Term : forall i y : nat, sup i y -> wf_bd y i.
@@ -257,8 +257,8 @@ Variable n : nat.
  apply q.
  intros.
  apply except.
- apply (inf_sup_abs i y); auto with v62. 
- elim H; auto with v62.
+ apply (inf_sup_abs i y); auto. 
+ elim H; auto.
  Qed.
 
 (* Proof of (wf_bd y) by induction on y *)
@@ -267,8 +267,8 @@ Variable n : nat.
  red in |- *; intros i h P q.
  apply q.
  intros; apply except.
- apply (inf_sup_abs i 0); auto with v62.
- elim H; auto with v62.
+ apply (inf_sup_abs i 0); auto.
+ elim H; auto.
  Qed.
 
  Lemma cas_ind : forall i y : nat, wf_bd y i -> wf_bd (S y) i.
@@ -277,18 +277,18 @@ Variable n : nat.
  apply H0; intros.
  elim (inf_sup v y); intros.
  apply H1.
- apply (Lem2 (S y) y u v); auto with v62.
+ apply (Lem2 (S y) y u v); auto.
  apply H0; intros.
  apply except.
  apply (infSn_n v).
- apply (tran_inf (S v) (S y) v); auto with v62.
- apply (Lem3 (S y) u0 u v); auto with v62.
+ apply (tran_inf (S v) (S y) v); auto.
+ apply (Lem3 (S y) u0 u v); auto.
  Qed.
 
 Theorem Wf1 : forall y i : nat, sup i 0 -> wf_bd y i.
 intros; elim y.
-apply cas_base; auto with v62.
-intros; apply cas_ind; auto with v62.
+apply cas_base; auto.
+intros; apply cas_ind; auto.
 Qed.
 
 (* Actually we will use a simpler induction scheme *)
@@ -303,15 +303,15 @@ intros.
 elim y; red in |- *; intros.
 apply H0; intros.
 apply except.
-apply (inf_sup_abs i 0); auto with v62.
+apply (inf_sup_abs i 0); auto.
 apply H0; intros.
 apply H1; intros.
 elim (inf_sup k n0); intros.
-apply H2; auto with v62.
+apply H2; auto.
 apply H1; intros.
 apply except.
-apply (inf_sup_abs (twice k) (S n0)); auto with v62.
-apply sup_twice; auto with v62.
+apply (inf_sup_abs (twice k) (S n0)); auto.
+apply sup_twice; auto.
 Qed.
 
 (* Proof of the Limbo's program  *)
@@ -321,9 +321,9 @@ Qed.
  elim (inf_sup0 v u); intros.
  apply H1.
  apply abs.
- apply (Inf_Sup_abs u); auto with v62.
- apply (infInf u v); auto with v62.
- apply (tran_inf u (S u) v); auto with v62.
+ apply (Inf_Sup_abs u); auto.
+ apply (infInf u v); auto.
+ apply (tran_inf u (S u) v); auto.
  apply infS.
  Qed.
 
@@ -336,20 +336,20 @@ Qed.
  elim (Inf_Sup (add k 0)); intros.
  elim H1; intros.
  elim (Inf_Sup (add k x0)); intros.
- red in |- *; exists (add k x0); auto with v62.
+ red in |- *; exists (add k x0); auto.
  unfold twice in q.
- elim add_ass; auto with v62.
- red in |- *; exists x0; auto with v62.
- apply Lem4; auto with v62.
- elim (add_nO k); auto with v62.
- red in |- *; exists 0; auto with v62.
+ elim add_ass; auto.
+ red in |- *; exists x0; auto.
+ apply Lem4; auto.
+ elim (add_nO k); auto.
+ red in |- *; exists 0; auto.
  Qed.
 
  Lemma Prog : forall i : nat, Limbo i.
  red in |- *; intros.
  elim (Inf_Sup 0); intros.
  left; apply (LimboLem i H a).
- right; auto with v62.
+ right; auto.
  Qed.
 
 (* Final proof *)
